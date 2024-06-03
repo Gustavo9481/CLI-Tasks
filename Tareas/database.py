@@ -85,12 +85,20 @@ def format_tasks_list(rows: List) -> None:
 
 
 
-
+# -------------------------------------------------------- verificar/crear tabla
 @gestor_database
 def create_table(cursor = None) -> None:
     """
-    Verifica si la tabla ya existe, si no existe la crea 
+    Verifica si la tabla ya existe, si no existe la crea
+
+    Args:
+        cursor: conexión a base de datos sqlite porporcionado por
+        el decorador gestor_database
+       
+    Returns:
+        None
     """
+    
     create_table_sql = '''
         CREATE TABLE IF NOT EXISTS tareas_list (
         ID INTEGER PRIMARY KEY AUTOINCREMENT,
