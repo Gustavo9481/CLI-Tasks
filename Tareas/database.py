@@ -3,12 +3,11 @@ import os
 from typing import List, Dict, Callable, Any
 from entities import Task
 
-
 # ......................... Tareas | módulo database ......................... 󰌠
-'''
-Servicios de base de datos
-Funciones encargadas de las conexiones y consultas a la base de datos
-'''
+# Servicios de base de datos
+# Funciones encargadas de las conexiones y consultas a la base de datos
+
+
 
 db_path:str = '/home/guscode/Code/Proyectos/P_01_Tareas/Tareas/Proyecto_Tareas.db'
 db_connect = sqlite3.connect(db_path)                                     # 🠶 01  
@@ -19,8 +18,7 @@ message:str = "Lista de tareas =>"       # contenedor de mensajes de confirmaci�
 
 # -------------------------------------------------- decorador | gestor_database
 def gestor_database(func: Callable[..., Any]) -> Callable[..., Any]:      # 🠶 02
-    """
-    Decorador para manejar la conexión a la base de datos SQLite y el cursor
+    """ Decorador para manejar la conexión a la base de datos SQLite y el cursor
 
     Abre una conexión a la base de datos SQLite,crear un cursor, ejecutar 
     función decorada con el cursor y luego cerrar el cursor
@@ -57,8 +55,8 @@ def gestor_database(func: Callable[..., Any]) -> Callable[..., Any]:      # 🠶
 
 # --------------------------------------------------------- formato de impresión
 def format_tasks_list(rows: List) -> None:
-    """
-    Proporciona el formato a la lista de tareas
+    """ Proporciona el formato a la lista de tareas
+
     El diccionario caracter determina el color de la etiqueta según el nombre
 
     Args: 
@@ -88,8 +86,7 @@ def format_tasks_list(rows: List) -> None:
 # -------------------------------------------------------- verificar/crear tabla
 @gestor_database
 def create_table(cursor = None) -> None:
-    """
-    Verifica si la tabla ya existe, si no existe la crea
+    """ Verifica si la tabla ya existe, si no existe la crea
 
     Args:
         cursor: conexión a base de datos sqlite porporcionado por
@@ -115,8 +112,7 @@ def create_table(cursor = None) -> None:
 # -------------------------------------------------------------- lista de tareas
 @gestor_database
 def all_tasks(cursor = None) -> None:
-    """
-    Renderiza la lista completa de tareas. Se ejecuta al iniciar script
+    """ Renderiza la lista completa de tareas. Se ejecuta al iniciar script
     
     Args:
         cursor: conexión a base de datos sqlite porporcionado por
@@ -139,8 +135,7 @@ def new_task(
         task_hashtag: str, 
         task_content: str, 
         cursor = None) -> None:
-    """
-    Crea un nuevo registro en la base de datos (Tarea)
+    """ Crea un nuevo registro en la base de datos (Tarea)
     dependencias: entities.py | Task
 
     Args:
@@ -167,8 +162,7 @@ def new_task(
 # ----------------------------------------------------- marcar o desmarcar tarea
 @gestor_database
 def checked_unchecked(task_id: int, cursor = None) -> None:
-    """
-    Marca o desmarca el status completado/pendiente de la tarea seleccionada
+    """ Marca o desmarca el status completado/pendiente de la tarea seleccionada
 
     Args:
         task_id (int): n° id de la tarea que se desea modificar status
@@ -191,8 +185,7 @@ def checked_unchecked(task_id: int, cursor = None) -> None:
 # --------------------------------------------------------------- filtrar tareas
 @gestor_database
 def task_filter(required: str, query: str, cursor = None) -> None:
-    """
-    Filtra las tareas por el tag o hashtag requerido, en el módulo app.py 
+    """ Filtra las tareas por el tag o hashtag requerido, en el módulo app.py 
     se aplica la condición de la consulta
 
     Args:
@@ -218,8 +211,7 @@ def edit_task(
         task_hashtag: str, 
         task_content: str, 
         cursor = None) -> None:
-    """
-    Edita los campos de las tareas, excepto el status
+    """ Edita los campos de las tareas, excepto el status
 
     Args:
         task_id (int): n° id de la tarea a editar 
@@ -246,8 +238,7 @@ def edit_task(
 # --------------------------------------------------------------- eliminar tarea
 @gestor_database
 def delete_task(task_id: int, cursor = None) -> None:
-    """
-    Elimina el registro de tarea de la base de datos
+    """ Elimina el registro de tarea de la base de datos
 
     Args:
         task_id (int): Número de tarea (id de data base)
@@ -258,5 +249,3 @@ def delete_task(task_id: int, cursor = None) -> None:
     """
 
     cursor.execute("DELETE FROM tareas_list WHERE ID = ?", (task_id,))
-    
-
